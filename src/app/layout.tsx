@@ -23,9 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        style={{
+          background: '240 10% 3.9%'
+        }}
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
         )}
       >{children}</body>
     </html>
