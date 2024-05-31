@@ -1,26 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+const keyboardCanvas = document.getElementById('keyboardCanvas');
+const keyboardCtx = keyboardCanvas.getContext('2d');
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keyboard Canvas</title>
-  <style>
-    canvas {
-      border: 1px solid black;
-    }
-  </style>
-</head>
-
-<body>
-  <canvas id="keyboardCanvas" width="800" height="400"></canvas>
-  <script>
-    const canvas = document.getElementById('keyboardCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const defaultSize = 42
-    const keyboardLayout = [
-      [
+const defaultSize = 42
+const keyboardLayout = [
+    [
         { x: 0, y: 0, width: defaultSize, height: defaultSize, code: "ESC", label: 'ESC', },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, code: "F1", label: 'F1', },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, code: "F2", label: 'F2', },
@@ -34,8 +17,8 @@
         { x: 0, y: 0, width: defaultSize, height: defaultSize, code: "F10", label: 'F10', },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, code: "F11", label: 'F11', },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, code: "F12", label: 'F12', }
-      ],
-      [
+    ],
+    [
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Backquote", code: "Backquote" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Digit1", code: "Digit1" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Digit2", code: "Digit2" },
@@ -50,8 +33,8 @@
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Minus", code: "Minus" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Equal", code: "Equal" },
         { x: 0, y: 0, width: defaultSize + 52, height: defaultSize, label: "Backspace", code: "Backspace" },
-      ],
-      [
+    ],
+    [
         { x: 0, y: 0, width: defaultSize + 26, height: defaultSize, label: "Tab", code: "Tab" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "KeyQ", code: "KeyQ" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "KeyW", code: "KeyW" },
@@ -66,7 +49,7 @@
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "BracketLeft", code: "BracketLeft" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "BracketRight", code: "BracketRight" },
         { x: 0, y: 0, width: defaultSize + 25, height: defaultSize, label: "Backslash", code: "Backslash" },
-      ], [
+    ], [
         { x: 0, y: 0, width: defaultSize + 40, height: defaultSize, label: "CapsLock", code: "CapsLock" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "KeyA", code: "KeyA" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "KeyS", code: "KeyS" },
@@ -80,7 +63,7 @@
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Semicolon", code: "Semicolon" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Quote", code: "Quote" },
         { x: 0, y: 0, width: defaultSize + 58, height: defaultSize, label: "Enter", code: "Enter" },
-      ], [
+    ], [
         { x: 0, y: 0, width: defaultSize + 68, height: defaultSize, label: "ShiftLeft", code: "ShiftLeft" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "KeyZ", code: "KeyZ" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "KeyX", code: "KeyX" },
@@ -93,7 +76,7 @@
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Period", code: "Period" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Slash", code: "Slash" },
         { x: 0, y: 0, width: defaultSize + 77, height: defaultSize, label: "ShiftRight", code: "ShiftRight" },
-      ], [
+    ], [
         { x: 0, y: 0, width: defaultSize + 12, height: defaultSize, label: "ControlLeft", code: "ControlLeft" },
         { x: 0, y: 0, width: defaultSize + 12, height: defaultSize, label: "MetaLeft", code: "MetaLeft" },
         { x: 0, y: 0, width: defaultSize + 12, height: defaultSize, label: "AltLeft", code: "AltLeft" },
@@ -102,46 +85,42 @@
         { x: 0, y: 0, width: defaultSize + 12, height: defaultSize, label: "MetaRight", code: "MetaRight" },
         { x: 0, y: 0, width: defaultSize, height: defaultSize, label: "Fn", code: "Fn" },
         { x: 0, y: 0, width: defaultSize + 12, height: defaultSize, label: "ControlRight", code: "ControlRight" },
-      ]]
-    function adjustKeyboardLayout(keyboardLayout, defaultSize) {
-      return keyboardLayout.reduce((acc, row) => {
+    ]]
+function adjustKeyboardLayout(keyboardLayout, defaultSize) {
+    return keyboardLayout.reduce((acc, row) => {
         let currentX = 0;
         const newRow = row.map(key => {
-          if (key.code === 'F1') { currentX += defaultSize }
-          if (key.code === 'F5' || key.code === 'F9') { currentX += 27 }
-          const newKey = { ...key, x: currentX, y: acc.currentY };
-          currentX += key.width + 5;
-          return newKey;
+            if (key.code === 'F1') { currentX += defaultSize }
+            if (key.code === 'F5' || key.code === 'F9') { currentX += 27 }
+            const newKey = { ...key, x: currentX, y: acc.currentY };
+            currentX += key.width + 5;
+            return newKey;
         });
         acc.layout.push(newRow);
         if (acc.layout.length === 1) { acc.currentY += 27 }
         acc.currentY += (row[0]?.height || defaultSize) + 5;
         return acc;
-      }, { currentY: 0, layout: [] }).layout;
-    }
-    const newLayout = adjustKeyboardLayout(keyboardLayout, defaultSize);
+    }, { currentY: 0, layout: [] }).layout;
+}
+const newLayout = adjustKeyboardLayout(keyboardLayout, defaultSize);
 
-    function drawKeyboard() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = '14px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBase = 'middle';
-      newLayout.forEach((line) => {
+function drawKeyboard() {
+    keyboardCtx.clearRect(0, 0, keyboardCanvas.width, keyboardCanvas.height);
+    keyboardCtx.font = '14px Arial';
+    keyboardCtx.textAlign = 'center';
+    keyboardCtx.textBase = 'middle';
+    newLayout.forEach((line) => {
         line.forEach((key, index) => {
-          const { x, y, width, height, label } = key
-          ctx.fillStyle = 'lightgray';
-          ctx.fillRect(x, y, width, height);
+            const { x, y, width, height, label } = key
+            keyboardCtx.fillStyle = 'lightgray';
+            keyboardCtx.fillRect(x, y, width, height);
 
-          ctx.strokeStyle = 'black';
-          ctx.strokeRect(x, y, width, height);
+            keyboardCtx.strokeStyle = 'black';
+            keyboardCtx.strokeRect(x, y, width, height);
 
-          ctx.fillStyle = 'black';
-          ctx.fillText(label, x + width / 2, y + height / 2);
+            keyboardCtx.fillStyle = 'black';
+            keyboardCtx.fillText(label, x + width / 2, y + height / 2);
         })
-      })
-    }
-    drawKeyboard();
-  </script>
-</body>
-
-</html>
+    })
+}
+drawKeyboard();

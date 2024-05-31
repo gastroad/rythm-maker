@@ -44,6 +44,7 @@ class Line {
                 console.log('miss')
             }
             if (this.keyFlag && (Math.abs(array[0].y - 700) < 300)) {
+                console.log(array[0])
                 if ((Math.abs(array[0].y - 700) < 30)) {
                     console.log("per")
                 } else if ((Math.abs(array[0].y - 700) < 50)) {
@@ -111,21 +112,15 @@ const bindKeyboard = () => {
 }
 bindKeyboard()
 
-
-let fps = 0;
-let lastFrameTime = performance.now();
-
-function updateFPS() {
-    let currentTime = performance.now();
-    let deltaTime = currentTime - lastFrameTime;
-    lastFrameTime = currentTime;
-    fps = Math.round(1000 / deltaTime);
-    document.querySelector('#hello').innerHTML = `Current FPS: ${fps}`
-    requestAnimationFrame(updateFPS);
-}
-
-updateFPS();
 document.querySelector('#play').onclick = () => {
+    cancelAnimationFrame(gameID);
+    song = [
+        [0, 60, 90, 120],
+        [0, 80, 90, 120],
+        [0, 60, 70, 120],
+        [0, 30, 90, 120]
+    ]
+    timer = 0
     frame()
 }
 document.querySelector('#reset').onclick = () => {
