@@ -7,11 +7,12 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ReactNode } from "react"
+import { StaticImageData } from "next/image"
 
 export interface GameListItemType {
     title: string
     description: string,
-    thumbNail: string,
+    thumbNail: StaticImageData,
     handlePlayClick: () => void,
     handleMakeClick: () => void
 }
@@ -21,11 +22,12 @@ const GameListItem = ({ title, description, thumbNail, handlePlayClick, handleMa
             <Card>
                 <CardHeader>
                     <CardTitle>{title}</CardTitle>
-                    <div className="flex">
+                    <div className="flex" style={{ justifyContent: 'space-between', }}>
                         <div style={{
                             display: 'flex',
                             flexFlow: 'column',
                             justifyContent: 'space-between',
+                            width: "60vw"
                         }}>
                             <CardDescription>
                                 {description}
@@ -36,7 +38,7 @@ const GameListItem = ({ title, description, thumbNail, handlePlayClick, handleMa
                             </div>
                         </div>
                         <div className="ml-8">
-                            <Image style={{ backgroundColor: "red", minWidth: '150px', minHeight: "150px" }} src={thumbNail} objectFit="cover" alt="" />
+                            <Image style={{ maxWidth: '150px', maxHeight: "150px" }} src={thumbNail} objectFit="cover" alt="" />
                         </div>
                     </div>
                 </CardHeader>
