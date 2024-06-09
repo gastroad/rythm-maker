@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation"
 
 export default function Page() {
     const router = useRouter()
-    console.log(router)
     const gameListData: GameListItemType[] = [
         {
             title: "Maze-Maker",
             description: "Create your own maze and navigate through it to find the exit in this challenging puzzle game. Design creatively and escape quickly!",
             thumbNail: MazeMakerThumbnail,
-            handlePlayClick: () => { },
+            handlePlayClick: () => {
+                router.push('/mazemaker')
+            },
             handleMakeClick: () => { },
         },
         {
